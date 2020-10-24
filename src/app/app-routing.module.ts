@@ -21,6 +21,26 @@ const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: () => import('./authentication/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
+  },
+  {
+    path: 'add-donation',
+    loadChildren: () => import('./donor/add-donation/add-donation.module').then(m => m.AddDonationPageModule)
+  },
+  {
+    path: 'admin-chat',
+    loadChildren: () => import('./admin/admin-chat/admin-chat.module').then( m => m.AdminChatPageModule)
+  },
+  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+  },
+  {
+    path: 'add-project',
+    loadChildren: () => import('./NGO/add-project/add-project.module').then( m => m.AddProjectPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./NGO/chat/chat.module').then( m => m.ChatPageModule)
   }
 ];
 @NgModule({

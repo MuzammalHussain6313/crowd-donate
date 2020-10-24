@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoadingController, NavController} from '@ionic/angular';
-import {Facebook, FacebookLoginResponse} from '@ionic-native/facebook/ngx';
-import {GooglePlus} from '@ionic-native/google-plus/ngx';
 
 import * as firebase from 'firebase';
 import {UserService} from '../../services/user.service';
-import {PhoneService} from '../../services/phone.service';
 
 @Component({
     selector: 'app-login',
@@ -17,21 +14,16 @@ export class LoginPage implements OnInit {
     constructor(private formBuilder: FormBuilder,
                 private service: UserService,
                 private navCtrl: NavController,
-                private fb: Facebook,
-                private gp: GooglePlus,
-                private phoneService: PhoneService,
                 private readonly loadingCtrl: LoadingController) {
     }
 
     loading: any;
-    loginWithPhoneForm: FormGroup;
     loginForm: FormGroup;
     passwordType = 'password';
     passwordIcon = 'eye-off';
 
     ngOnInit() {
         this.formInitializer();
-        this.phoneFormInitializer();
     }
 
     hideShowPassword() {
@@ -46,71 +38,6 @@ export class LoginPage implements OnInit {
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
         });
     }
-
-    phoneFormInitializer() {
-        this.loginWithPhoneForm = this.formBuilder.group({
-            phone: ['', Validators.compose([Validators.required,
-                Validators.minLength(10), Validators.maxLength(10)])]
-        });
-    }
-
-    sendCode() {
-        const data = this.loginWithPhoneForm.value;
-        const isnum = /^\d+$/.test(data.phone);
-        if (isnum) {
-            this.phoneService.sendCode(data.phone);
-        } else {
-            alert('Please enter only digits.');
-        }
-    }
-
-    async loginWithGooglePlus() {
-        this.loading = await this.loadingCtrl.create({
-            message: 'please wait...'
-        });
-        await this.loading.dismiss();
-        this.gp.login({
-            scopes: '',
-            webClientId: '866280638179-m76bb3s7rht6vssj1foft5b00t3l6oku.apps.googleusercontent.com',
-            offline: true
-        }).then((res) => {
-            console.log('Logged into Google Plus!', res);
-            if (this.loading) {
-                this.loading.dismiss();
-            }
-            this.navCtrl.navigateRoot(['/tabs']);
-        }).catch(e => {
-            console.log('Error logging into G+', e);
-            if (this.loading) {
-                this.loading.dismiss();
-            }
-        });
-    }
-
-    async loginWithFacebook() {
-        this.loading = await this.loadingCtrl.create({
-            message: 'please wait...'
-        });
-        await this.loading.dismiss();
-        this.fb.login(['public_profile', 'email'])
-            .then((res) => {
-                console.log('Logged into Facebook!', res);
-                if (this.loading) {
-                    this.loading.dismiss();
-                }
-                this.navCtrl.navigateRoot(['/tabs']);
-            })
-            .catch(e => {
-                console.log('Error logging into Facebook', e);
-                if (this.loading) {
-                    this.loading.dismiss();
-                }
-            });
-        if (this.loading) {
-            await this.loading.dismiss();
-        }
-    }
-
     async login() {
         this.loading = await this.loadingCtrl.create({
             message: 'please wait...'

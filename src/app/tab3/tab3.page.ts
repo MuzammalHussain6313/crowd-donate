@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {User} from '../models/user';
 import {UserService} from '../services/user.service';
-import {AlertController, LoadingController, NavController} from '@ionic/angular';
+import {ActionSheetController, AlertController, LoadingController, NavController} from '@ionic/angular';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 
@@ -19,13 +19,13 @@ export class Tab3Page {
                 private camera: Camera,
                 private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController,
+                private actionCtrl: ActionSheetController,
                 private navCtrl: NavController) {
         this.user = new User();
         this.user = service.getUser();
     }
 
     img: any;
-
     async logOut() {
         const alert = await this.alertCtrl.create({
             cssClass: 'my-custom-class',
@@ -290,5 +290,50 @@ export class Tab3Page {
             }
             alert(error);
         });
+    }
+
+    async moreOptions() {
+        const alert = await this.actionCtrl.create({
+            cssClass: 'my-custom-class',
+            buttons: [
+                {
+                    text: 'Log Out',
+                    icon: 'log-out',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        this.logOut();
+                    }
+                },
+                {
+                    text: 'Settings',
+                    icon: 'settings',
+                    handler: () => {
+                        this.navCtrl.navigateRoot(['/tabs/tab1']);
+                    }
+                },
+                {
+                    text: 'Change Password',
+                    icon: 'lock-closed',
+                    handler: () => {
+                        console.log('Destructive clicked');
+                    }
+                },
+                {
+                    text: 'Admin Chat',
+                    icon: 'mail',
+                    handler: () => {
+                        console.log('Archive clicked');
+                    }
+                },
+                {
+                    text: 'Cancel',
+                    icon: 'backspace',
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        await alert.present();
     }
 }

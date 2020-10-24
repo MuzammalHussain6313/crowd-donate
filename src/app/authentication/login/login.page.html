@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="success">
         <ion-title>Login</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -31,49 +31,10 @@
                     <ion-text (click)="forgotPassword()" class="ion-text-center" color="danger">
                       <h6><u>Forgot Password?</u></h6>
                     </ion-text>
-                    <ion-row style="padding-top: 20px" color="justify-content-center">
-                        <ion-col class="ion-align-self-center" size="6">
-                            <ion-button (click)="loginWithGooglePlus()" shape="round" color="danger">
-                              <ion-icon name="logo-google"></ion-icon>oogle</ion-button>
-                        </ion-col>
-                        <ion-col class="ion-align-self-center" size="6">
-                            <ion-button (click)="loginWithFacebook()" shape="round" color="primary">
-                              <ion-icon name="logo-facebook"></ion-icon>acebook</ion-button>
-                        </ion-col>
-                    </ion-row>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </form>
-
-    <form [formGroup]="loginWithPhoneForm">
-        <ion-grid>
-
-        <ion-row color="justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-            <div class="ion-text-center">
-                <h3>Login With Phone!</h3>
-            </div>
-            <div class="ion-padding">
-                <ion-item>
-                    <ion-input formControlName="phone" type="text" placeholder="Phone"></ion-input>
-                </ion-item>
-            </div>
-            <div class="ion-padding">
-                <ion-button [disabled]="loginWithPhoneForm.invalid" (click)="sendCode()" color="primary" type="submit"
-                            expand="block">Send Code
-                </ion-button>
-            </div>
-
-        </ion-col>
-    </ion-row>
-
-
-    </ion-grid>
-    </form>
-
-
-
 
     <ion-grid style="padding-top: 50px">
         <ion-row color="justify-content-center">
