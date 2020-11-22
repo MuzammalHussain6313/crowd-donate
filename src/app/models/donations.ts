@@ -14,4 +14,5 @@ export class Donations {
     time: string;
     type: string; // : i.e cloths, money, food, others
     show: boolean;
+    image: string;
 }

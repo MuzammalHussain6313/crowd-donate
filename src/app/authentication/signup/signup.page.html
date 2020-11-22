@@ -1,7 +1,8 @@
+
 <ion-header>
-  <ion-toolbar color="success">
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button text=""></ion-back-button>
     </ion-buttons>
     <ion-title>Sign Up</ion-title>
   </ion-toolbar>
@@ -9,39 +10,51 @@
 
 <ion-content>
   <form [formGroup]="signupForm">
-    <ion-grid>
-      <ion-row color="justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <h3>Create your account!</h3>
-          </div>
-          <div class="ion-padding">
-            <ion-item>
-              <ion-input name="firstName" formControlName="first_name" type="text" placeholder="First Name"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="lastName" formControlName="last_name" type="text" placeholder="Last Name"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="email" formControlName="email" type="email" placeholder="your@email.com"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="username" formControlName="user_name" type="text" placeholder="username"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input placeholder="Password" formControlName="password" [type]="passwordType" clearOnEdit="false"></ion-input>
-              <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
-            </ion-item>
-            <ion-item>
-              <ion-input placeholder="Confirm Password" formControlName="confirm_password" [type]="passwordType" clearOnEdit="false"></ion-input>
-              <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
-            </ion-item>
-          </div>
-          <div class="ion-padding">
-            <ion-button [disabled]="signupForm.invalid" (click)="signUpUser()" color="primary" type="submit" expand="block">Sign up</ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="11">
+        <h3 style="text-align: center">Create your account!</h3>
+        <ion-item lines="none" class="itemCont">
+          <ion-input name="fullName" formControlName="fullName" type="text" placeholder="Full Name"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input name="email" formControlName="email" type="email" placeholder="your@email.com"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input name="username" formControlName="user_name" type="text" placeholder="username"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-label>Role</ion-label>
+          <ion-select (ionChange)="changeOption($event)" value="" formControlName="role" placeholder="--Select--" okText="Okay" cancelText="Dismiss">
+            <ion-select-option *ngFor="let role of roles" value="{{role}}">{{role}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="none" class="itemCont" *ngIf="isNGO">
+          <ion-input placeholder="Organization Name" formControlName="orgName" type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input placeholder="Password" formControlName="password" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input placeholder="Confirm Password" formControlName="confirm_password" [type]="passwordType" clearOnEdit="false"></ion-input>
+          <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input placeholder="Phone Number" formControlName="phone" type="number"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input placeholder="Street Address" formControlName="address" type="text"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input placeholder="City Name" formControlName="city" type="text"></ion-input>
+        </ion-item>
+        <ion-button class="itemCont" [disabled]="signupForm.invalid" (click)="signUpUser()"
+                    color="primary" type="submit" expand="block">SIGN UP</ion-button>
+        <div style="text-align: center; padding-top: 45px">
+          <ion-label color="secondary">Already have an account?
+            <span routerLink="/" style="color: #ab1a3e"><b> <u>Sign In</u></b></span></ion-label>
+        </div>
+      </ion-col>
+    </ion-row>
   </form>
 </ion-content>

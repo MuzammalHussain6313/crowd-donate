@@ -13,6 +13,8 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import * as firebase from 'firebase';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyByWmLrevFgeDG13L52z6xWoT2IE0opZAE',
@@ -43,6 +45,8 @@ firebase.initializeApp(firebaseConfig);
         Facebook,
         GooglePlus,
         FirebaseX,
+        LocalNotifications,
+        EmailComposer,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

@@ -100,7 +100,8 @@ export class AddProjectPage implements OnInit {
             quantity: data.quantity,
             quantityUnit: data.quantityUnit,
             time: new Date().toString(),
-            type: data.type
+            type: data.type,
+            image: ''
         });
     }
 

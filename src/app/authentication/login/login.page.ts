@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
         });
     }
+
     async login() {
         this.loading = await this.loadingCtrl.create({
             message: 'please wait...'
@@ -48,7 +49,6 @@ export class LoginPage implements OnInit {
             console.log(res);
             if (res.user.emailVerified) {
                 this.saveUser(res.user.uid);
-                this.navCtrl.navigateRoot(['/tabs']);
             } else {
                 alert('Please verify your email first.');
             }
@@ -73,6 +73,13 @@ export class LoginPage implements OnInit {
             console.log(snapshot.val());
             if (this.loading) {
                 this.loading.dismiss();
+            }
+            const isAdmin = snapshot.val().isAdmin;
+            console.log('is Admin: ', isAdmin);
+            if (isAdmin) {
+                this.navCtrl.navigateRoot(['tabs/tab5']);
+            } else {
+                this.navCtrl.navigateRoot(['/tabs']);
             }
         });
     }

@@ -19,20 +19,18 @@ city:
 state:
 }
 user: {
-firstName: 
-lastName:
+fullName:
 email:
-phoneNumber:
+phone:
 cnic:
 }
 
 
 doner:
 user: {
-firstName: 
-lastName:
+fullName:
 email:
-phoneNumber:
+phone:
 cnic:
 }
 address: {

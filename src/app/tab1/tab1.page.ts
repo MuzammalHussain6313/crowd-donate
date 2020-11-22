@@ -3,6 +3,9 @@ import * as firebase from 'firebase';
 import {Donations, Project} from '../models/donations';
 import {AlertController, LoadingController, NavController} from '@ionic/angular';
 import {element} from 'protractor';
+import {ProjectService} from '../services/project.service';
+import {User} from '../models/user';
+import {UserService} from '../services/user.service';
 
 @Component({
     selector: 'app-tab1',
@@ -13,19 +16,35 @@ export class Tab1Page implements OnInit {
 
     projects: Project[] = [];
     loading: any;
+    user: User;
 
     constructor(private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController,
+                private service: ProjectService,
+                private userService: UserService,
                 private navCtrl: NavController) {
         this.loadData();
+        this.user = userService.getUser();
         // this.insertDummyData();
     }
 
     ngOnInit() {
     }
 
-    addDonor() {
+    addProject() {
         this.navCtrl.navigateForward(['/add-project']);
+    }
+
+    addDonation(i) {
+        // tslint:disable-next-line:no-debugger
+        debugger;
+        const length = this.projects[i].donationsRequired.length;
+        this.service.setLength(length);
+        const uid = this.projects[i].uid;
+        console.log('uid: ', uid);
+        console.log('length: ', length);
+        this.service.setUid(uid);
+        this.navCtrl.navigateForward(['/add-donation']);
     }
 
     async loadData() {
@@ -40,6 +59,7 @@ export class Tab1Page implements OnInit {
                     this.projects.push(node.val());
                     console.log(this.projects);
                 });
+                this.service.setProjects(this.projects);
                 console.log('projects before', this.projects[0].donationsRequired);
                 this.projects.forEach((project) => {
                     project.show = false;
@@ -53,6 +73,7 @@ export class Tab1Page implements OnInit {
                 }
             }, err => {
                 console.log('error: ', err);
+                this.projects = this.service.getProjects();
             });
     }
 
@@ -175,5 +196,13 @@ export class Tab1Page implements OnInit {
             }
             alert(error);
         });
+    }
+
+    sendDonation() {
+        this.navCtrl.navigateForward(['/add-donation']);
+    }
+
+    openChat() {
+        this.navCtrl.navigateForward(['/chat']);
     }
 }

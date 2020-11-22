@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-
-import {Platform} from '@ionic/angular';
+import {NavController, Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
+import {User} from './models/user';
+import {UserService} from './services/user.service';
 
 @Component({
     selector: 'app-root',
@@ -11,26 +12,41 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent {
     appState: any;
+    user: User;
 
     constructor(
         private platform: Platform,
         private splashScreen: SplashScreen,
-        private statusBar: StatusBar
+        private statusBar: StatusBar,
+        private service: UserService,
+        private navCtrl: NavController
     ) {
         this.initializeApp();
+        this.user = service.getUser();
     }
 
     initializeApp() {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
-            this.statusBar.backgroundColorByHexString('#2dd36f'); // success
+            this.statusBar.backgroundColorByHexString('#dadada'); // success
             // this.statusBar.backgroundColorByHexString('#3dc2ff');  // secondary
             this.statusBar.styleDefault();
             this.splashScreen.hide();
+            this.checkAppState();
         });
     }
 
     checkAppState() {
-
+        // tslint:disable-next-line:no-debugger
+        // debugger;
+        if (this.user) {
+            if (this.user.isAdmin) {
+                this.navCtrl.navigateRoot(['tabs/tab5']);
+            } else {
+                this.navCtrl.navigateRoot(['/tabs/tab1']);
+            }
+        } else {
+            this.navCtrl.navigateRoot(['/']);
+        }
     }
 }

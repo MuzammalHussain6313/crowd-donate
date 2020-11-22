@@ -26,6 +26,7 @@ export class Tab3Page {
     }
 
     img: any;
+
     async logOut() {
         const alert = await this.alertCtrl.create({
             cssClass: 'my-custom-class',
@@ -54,6 +55,7 @@ export class Tab3Page {
         this.loading.present();
         firebase.auth().signOut().then((res) => {
             console.log(res);
+            localStorage.clear();
             if (this.loading) {
                 this.loading.dismiss();
             }
@@ -100,7 +102,7 @@ export class Tab3Page {
             const base64Image = 'data:image/jpeg;base64,' + imageData;
             this.user.profileImage = base64Image;
             this.service.setUser(this.user);
-            this.updateProfileImageFirebase(base64Image);
+            // this.updateProfileImageFirebase(base64Image);
             this.uploadImageInFireStorage(base64Image);
             setTimeout(() => {
                 this.user = this.service.getUser();
@@ -142,6 +144,7 @@ export class Tab3Page {
             alert(err);
         });
     }
+
     async updateProfileImageFirebase(base64Image) {
         this.loading = await this.loadingCtrl.create({
             message: 'please wait...'
@@ -169,11 +172,11 @@ export class Tab3Page {
         firebase.database().ref(`/users/${this.user.uid}`).update({
             photoUrl: imageUrl
         }).then(() => {
-            this.user.profileImage = imageUrl;
-            this.service.setUser(this.user);
             if (this.loading) {
                 this.loading.dismiss();
             }
+            this.user.profileImage = imageUrl;
+            this.service.setUser(this.user);
         }).catch((error) => {
             if (this.loading) {
                 this.loading.dismiss();
@@ -190,7 +193,7 @@ export class Tab3Page {
                 {
                     name: `name`,
                     type: 'text',
-                    value: this.user.firstName + ' ' + this.user.lastName,
+                    value: this.user.fullName,
                     placeholder: 'Enter name (2 words)'
                 },
             ],
@@ -205,8 +208,8 @@ export class Tab3Page {
                 }, {
                     text: 'Ok',
                     handler: (alertData) => {
-                        const fullName = alertData.name.split(' ');
-                        this.updateNameInFirebase(fullName[0], fullName[1]);
+                        const fullName = alertData.name;
+                        this.updateNameInFirebase(fullName);
                         console.log(alertData.name);
                     }
                 }
@@ -269,17 +272,15 @@ export class Tab3Page {
         });
     }
 
-    async updateNameInFirebase(fName, lName) {
+    async updateNameInFirebase(name) {
         this.loading = await this.loadingCtrl.create({
             message: 'please wait...'
         });
         this.loading.present();
         firebase.database().ref(`/users/${this.user.uid}`).update({
-            firstName: fName,
-            lastName: lName
+            fullName: name
         }).then(() => {
-            this.user.firstName = fName;
-            this.user.lastName = lName;
+            this.user.fullName = name;
             this.service.setUser(this.user);
             if (this.loading) {
                 this.loading.dismiss();
@@ -307,6 +308,7 @@ export class Tab3Page {
                 {
                     text: 'Settings',
                     icon: 'settings',
+                    cssClass: 'primary',
                     handler: () => {
                         this.navCtrl.navigateRoot(['/tabs/tab1']);
                     }
@@ -314,20 +316,31 @@ export class Tab3Page {
                 {
                     text: 'Change Password',
                     icon: 'lock-closed',
+                    cssClass: 'primary',
                     handler: () => {
+                        this.navCtrl.navigateForward(['/change-password']);
                         console.log('Destructive clicked');
                     }
                 },
                 {
-                    text: 'Admin Chat',
+                    text: 'Help Desk',
                     icon: 'mail',
+                    cssClass: 'primary',
                     handler: () => {
                         console.log('Archive clicked');
+                        if (this.user.isAdmin) {
+                            this.navCtrl.navigateForward(['/channels']);
+                        } else if (this.user.isDonor) {
+                            this.navCtrl.navigateForward(['/donor-chat']);
+                        } else {
+                            this.navCtrl.navigateForward(['/chat']);
+                        }
                     }
                 },
                 {
                     text: 'Cancel',
                     icon: 'backspace',
+                    cssClass: 'primary',
                     handler: () => {
                         console.log('Cancel clicked');
                     }
@@ -335,5 +348,29 @@ export class Tab3Page {
             ]
         });
         await alert.present();
+    }
+
+    goToPrivacy() {
+        this.navCtrl.navigateForward((['/privacy']));
+    }
+
+    goToContactUs() {
+        this.navCtrl.navigateForward(['/contact-us']);
+    }
+
+    goToNotifications() {
+        this.navCtrl.navigateForward(['/notifications']);
+    }
+
+    goToEditProfile() {
+        this.navCtrl.navigateForward(['/edit-profile']);
+    }
+
+    goToChangePassword() {
+        this.navCtrl.navigateForward(['/change-password']);
+    }
+
+    goToTerms() {
+        this.navCtrl.navigateForward(['/terms']);
     }
 }
