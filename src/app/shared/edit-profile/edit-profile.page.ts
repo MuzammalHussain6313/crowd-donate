@@ -3,8 +3,6 @@ import {UserService} from '../../services/user.service';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 import {AlertController, LoadingController, NavController} from '@ionic/angular';
-import {Project} from '../../models/donations';
-import {createConsoleLogServer} from '@ionic/angular-toolkit/builders/cordova-serve/log-server';
 
 @Component({
     selector: 'app-edit-profile',
@@ -15,8 +13,6 @@ export class EditProfilePage implements OnInit {
     user: any;
     loading: any;
     show = false;
-    cities: any;
-    city: any;
     base64Image: any;
 
     constructor(private service: UserService,
@@ -25,8 +21,6 @@ export class EditProfilePage implements OnInit {
                 private navCtrl: NavController,
                 private alertCtrl: AlertController) {
         this.user = this.service.getUser();
-        this.city = this.user.city;
-        this.cities = service.cities;
     }
 
     ngOnInit() {
@@ -111,6 +105,7 @@ export class EditProfilePage implements OnInit {
                     text: 'Ok',
                     handler: (alertData) => {
                         this.user.fullName = alertData.name;
+                        this.updateUser();
                     }
                 }
             ]
@@ -143,79 +138,36 @@ export class EditProfilePage implements OnInit {
                     handler: (alertData) => {
                         this.user.phone = alertData.phone;
                         console.log(alertData.phone);
+                        this.updateUser();
                     }
                 }
             ]
         })]);
         await alert.present();
-    }
-
-    async getAddress() {
-        const [alert] = await Promise.all([this.alertCtrl.create({
-            cssClass: 'my-custom-class',
-            header: 'Edit Your Address!',
-            inputs: [
-                {
-                    name: `address`,
-                    type: 'text',
-                    value: this.user.address ? this.user.address : '',
-                    placeholder: 'Enter CNIC...'
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    cssClass: 'secondary',
-                    handler: () => {
-                        console.log('Confirm Cancel');
-                    }
-                }, {
-                    text: 'Ok',
-                    handler: (alertData) => {
-                        this.user.address = alertData.address;
-                        console.log(alertData.address);
-                    }
-                }
-            ]
-        })]);
-        await alert.present();
-    }
-
-    expandCities() {
-        this.show = !this.show;
-    }
-
-    async getCity() {
-        const cities = this.service.cities;
-    }
-
-    setCity(event: CustomEvent) {
-        this.user.city = this.city;
-        console.log(event);
-        console.log(this.city);
     }
 
     updateUser() {
         if (this.base64Image) {
             this.uploadImageInFireStorage(this.base64Image);
         } else {
-          this.updateUserInFirebase();
+            this.updateUserInFirebase();
         }
     }
 
     async updateUserInFirebase() {
-      this.loading = await this.loadingCtrl.create({
-        message: 'please wait...'
-      });
-      this.loading.present();
-      firebase.database().ref(`/users/${this.user.uid}`).set(this.user)
-          .then(res => {
-            console.log(res); this.loading.dismiss();
-            this.navCtrl.back();
-          })
-          .catch(err => {
-            console.log(err); this.loading.dismiss();
-          });
+        this.loading = await this.loadingCtrl.create({
+            message: 'please wait...'
+        });
+        this.loading.present();
+        firebase.database().ref(`users/${this.user.uid}`).set(this.user)
+            .then(res => {
+                console.log(res);
+                this.loading.dismiss();
+                this.service.setUser(this.user);
+            })
+            .catch(err => {
+                console.log(err);
+                this.loading.dismiss();
+            });
     }
 }

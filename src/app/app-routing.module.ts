@@ -23,40 +23,20 @@ const routes: Routes = [
     loadChildren: () => import('./authentication/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
   },
   {
-    path: 'add-donation',
-    loadChildren: () => import('./donor/add-donation/add-donation.module').then(m => m.AddDonationPageModule)
+    path: 'course-detail',
+    loadChildren: () => import('./shared/course-detail/course-detail.module').then( m => m.CourseDetailPageModule)
   },
   {
-    path: 'admin-chat',
-    loadChildren: () => import('./admin/admin-chat/admin-chat.module').then( m => m.AdminChatPageModule)
+    path: 'old-quiz',
+    loadChildren: () => import('./old-quiz/old-quiz.module').then( m => m.OldQuizPageModule)
   },
   {
-    path: 'tab4',
-    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+    path: 'add-quiz',
+    loadChildren: () => import('./add-quiz/add-quiz.module').then( m => m.AddQuizPageModule)
   },
   {
-    path: 'add-project',
-    loadChildren: () => import('./NGO/add-project/add-project.module').then( m => m.AddProjectPageModule)
-  },
-  {
-    path: 'chat',
-    loadChildren: () => import('./NGO/chat/chat.module').then( m => m.ChatPageModule)
-  },
-  {
-    path: 'tab5',
-    loadChildren: () => import('./tab5/tab5.module').then( m => m.Tab5PageModule)
-  },
-  {
-    path: 'tab6',
-    loadChildren: () => import('./tab6/tab6.module').then( m => m.Tab6PageModule)
-  },
-  {
-    path: 'donor-chat',
-    loadChildren: () => import('./donor/donor-chat/donor-chat.module').then( m => m.DonorChatPageModule)
-  },
-  {
-    path: 'channels',
-    loadChildren: () => import('./admin/channels/channels.module').then( m => m.ChannelsPageModule)
+    path: 'attempt-quiz',
+    loadChildren: () => import('./attempt-quiz/attempt-quiz.module').then( m => m.AttemptQuizPageModule)
   },
   {
     path: 'edit-profile',
@@ -79,24 +59,20 @@ const routes: Routes = [
     loadChildren: () => import('./shared/terms/terms.module').then( m => m.TermsPageModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./shared/profile/profile.module').then( m => m.ProfilePageModule)
+    path: 'result',
+    loadChildren: () => import('./result/result.module').then( m => m.ResultPageModule)
   },
   {
-    path: 'channels',
-    loadChildren: () => import('./NGO/channels/channels.module').then( m => m.ChannelsPageModule)
+    path: 'students',
+    loadChildren: () => import('./students/students.module').then( m => m.StudentsPageModule)
   },
   {
-    path: 'donor-chat',
-    loadChildren: () => import('./NGO/donor-chat/donor-chat.module').then( m => m.DonorChatPageModule)
+    path: 'admin-channels',
+    loadChildren: () => import('./admin/channels/channels.module').then( m => m.ChannelsPageModule)
   },
   {
-    path: 'channels',
-    loadChildren: () => import('./donor/channels/channels.module').then( m => m.ChannelsPageModule)
-  },
-  {
-    path: 'ngo-chat',
-    loadChildren: () => import('./donor/ngo-chat/ngo-chat.module').then( m => m.NgoChatPageModule)
+    path: 'admin-chat',
+    loadChildren: () => import('./admin/admin-chat/admin-chat.module').then( m => m.AdminChatPageModule)
   }
 ];
 @NgModule({

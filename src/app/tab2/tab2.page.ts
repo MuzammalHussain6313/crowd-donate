@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {LoadingController, NavController} from '@ionic/angular';
-import * as firebase from 'firebase';
+import {ActionSheetController, AlertController, NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-tab2',
@@ -9,45 +8,50 @@ import * as firebase from 'firebase';
 })
 export class Tab2Page {
 
-    donors = [];
-    loading: any;
-    close: boolean;
-    open: boolean;
+    student = true;
+    faculty = false;
 
-    constructor(private loadingCtrl: LoadingController,
+    constructor(private actionCtrl: ActionSheetController,
+                private alertCtrl: AlertController,
                 private navCtrl: NavController) {
-        this.loadData();
     }
 
-    expandCLick(item) {
-        item.show = !item.show;
+    segmentChanged($event: CustomEvent) {
+        this.student = !this.student;
+        this.faculty = !this.faculty;
     }
 
-    async loadData() {
-        this.open = false;
-        this.close = true;
-        this.loading = await this.loadingCtrl.create({
-            message: 'please wait...'
-        });
-        this.loading.present();
-        firebase.database().ref('/donors')
-            .once('value').then(snapshot => {
-            snapshot.forEach((node) => {
-                this.donors.push(node.val());
-                if (this.loading) {
-                    this.loading.dismiss();
+    async moreOptions() {
+        const alert = await this.actionCtrl.create({
+            header: 'More Options !!!',
+            cssClass: 'my-custom-class',
+            buttons: [
+                {
+                    text: 'View Details',
+                    icon: 'eye',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        // this.navCtrl.navigateForward(['/result']);
+                    }
+                },
+                {
+                    text: 'Delete',
+                    icon: 'trash',
+                    cssClass: 'danger',
+                    handler: () => {
+                        this.navCtrl.navigateForward(['/add-quiz']);
+                    }
+                },
+                {
+                    text: 'Edit',
+                    icon: 'pencil-sharp',
+                    cssClass: 'primary',
+                    handler: () => {
+                        // this.navCtrl.navigateForward(['/students']);
+                    }
                 }
-                console.log(this.donors);
-            });
-        }).catch(err => {
-            if (this.loading) {
-                this.loading.dismiss();
-            }
-            alert(err);
+            ]
         });
-    }
-
-    openChat() {
-        this.navCtrl.navigateForward(['/chat']);
+        await alert.present();
     }
 }

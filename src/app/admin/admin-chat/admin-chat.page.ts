@@ -29,7 +29,7 @@ export class AdminChatPage implements OnInit {
 
     loadMessages() {
         const ref = 'admin-' + this.selectedEmail.split('.').join('');
-        firebase.database().ref(`/chat/${ref}/messages`).orderByChild('time').on('value', snapshot => {
+        firebase.database().ref(`chat/${ref}/messages`).orderByChild('time').on('value', snapshot => {
             this.messages = [];
             // tslint:disable-next-line:no-debugger
             debugger;
@@ -46,12 +46,12 @@ export class AdminChatPage implements OnInit {
         const ref = 'admin-' + this.selectedEmail.split('.').join('');
         const key = firebase.database().ref().push().key;
         if (!this.messages.length) {
-            firebase.database().ref(`/chat/${ref}`).set({
+            firebase.database().ref(`chat/${ref}`).set({
                 sender: this.selectedEmail,
             }).then(res => {
             }).catch(err => console.log(err));
         }
-        firebase.database().ref(`/chat/${ref}/messages`).child(key).set({
+        firebase.database().ref(`chat/${ref}/messages`).child(key).set({
             sender: 'admin',
             name: this.user.fullName,
             time: Date.now(),

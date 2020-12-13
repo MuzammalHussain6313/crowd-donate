@@ -28,8 +28,8 @@
             <ion-select-option *ngFor="let role of roles" value="{{role}}">{{role}}</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item lines="none" class="itemCont" *ngIf="isNGO">
-          <ion-input placeholder="Organization Name" formControlName="orgName" type="text"></ion-input>
+        <ion-item lines="none" class="itemCont" *ngIf="isStudent">
+          <ion-input placeholder="Registration No." formControlName="regNo" type="text"></ion-input>
         </ion-item>
         <ion-item lines="none" class="itemCont">
           <ion-input placeholder="Password" formControlName="password" [type]="passwordType" clearOnEdit="false"></ion-input>
@@ -41,12 +41,6 @@
         </ion-item>
         <ion-item lines="none" class="itemCont">
           <ion-input placeholder="Phone Number" formControlName="phone" type="number"></ion-input>
-        </ion-item>
-        <ion-item lines="none" class="itemCont">
-          <ion-input placeholder="Street Address" formControlName="address" type="text"></ion-input>
-        </ion-item>
-        <ion-item lines="none" class="itemCont">
-          <ion-input placeholder="City Name" formControlName="city" type="text"></ion-input>
         </ion-item>
         <ion-button class="itemCont" [disabled]="signupForm.invalid" (click)="signUpUser()"
                     color="primary" type="submit" expand="block">SIGN UP</ion-button>

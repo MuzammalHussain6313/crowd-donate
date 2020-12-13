@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "903770949561",
-    "firebase_url": "https://crowd-donate.firebaseio.com",
-    "project_id": "crowd-donate",
-    "storage_bucket": "crowd-donate.appspot.com"
+    "project_number": "788525031845",
+    "firebase_url": "https://quiz-on-mobile-app-default-rtdb.firebaseio.com",
+    "project_id": "quiz-on-mobile-app",
+    "storage_bucket": "quiz-on-mobile-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:903770949561:android:9b7020c3ef521616f69868",
+        "mobilesdk_app_id": "1:788525031845:android:84af455fcf916809c0884c",
         "android_client_info": {
-          "package_name": "com.ionic.cd"
+          "package_name": "com.ionic.quiz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "903770949561-4a653obpn5l3q967695etutkcv7jo0u2.apps.googleusercontent.com",
+          "client_id": "788525031845-olo08oo7q55o7jtc34s604714ac1m00c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAB9o_srr6lNh-ASBeoZHvdLa4HYxAeRHg"
+          "current_key": "AIzaSyD31xi8SZQ4P4xNb1xUMtbRnX-8epVz90M"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "903770949561-4a653obpn5l3q967695etutkcv7jo0u2.apps.googleusercontent.com",
+              "client_id": "788525031845-olo08oo7q55o7jtc34s604714ac1m00c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

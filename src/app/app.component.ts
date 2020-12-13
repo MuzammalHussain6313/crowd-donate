@@ -1,52 +1,29 @@
-import {Component} from '@angular/core';
-import {NavController, Platform} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {User} from './models/user';
+import { Component } from '@angular/core';
+
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {UserService} from './services/user.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss']
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-    appState: any;
-    user: User;
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private service: UserService
+  ) {
+    this.initializeApp();
+  }
 
-    constructor(
-        private platform: Platform,
-        private splashScreen: SplashScreen,
-        private statusBar: StatusBar,
-        private service: UserService,
-        private navCtrl: NavController
-    ) {
-        this.initializeApp();
-        this.user = service.getUser();
-    }
-
-    initializeApp() {
-        this.platform.ready().then(() => {
-            this.statusBar.styleDefault();
-            this.statusBar.backgroundColorByHexString('#dadada'); // success
-            // this.statusBar.backgroundColorByHexString('#3dc2ff');  // secondary
-            this.statusBar.styleDefault();
-            this.splashScreen.hide();
-            this.checkAppState();
-        });
-    }
-
-    checkAppState() {
-        // tslint:disable-next-line:no-debugger
-        // debugger;
-        if (this.user) {
-            if (this.user.isAdmin) {
-                this.navCtrl.navigateRoot(['tabs/tab5']);
-            } else {
-                this.navCtrl.navigateRoot(['/tabs/tab1']);
-            }
-        } else {
-            this.navCtrl.navigateRoot(['/']);
-        }
-    }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
+  }
 }
