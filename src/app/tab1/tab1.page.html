@@ -1,25 +1,24 @@
-<ion-header [translucent]="true">
+<ion-header>
     <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Donations</ion-title>
-        <ion-icon color="primary" *ngIf="user?.isNGO" (click)="addProject()" name="add-circle" slot="end"
-                  size="large"></ion-icon>
+        <ion-title>Courses</ion-title>
+        <ion-icon (click)="joinClass()" color="primary" name="add-circle" slot="end" size="large"></ion-icon>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-row class="ion-justify-content-center">
         <ion-col size="11" class="py-0">
-            <ion-card style="text-transform: capitalize;"
-                      class="withdrawCard" *ngFor="let project of projects; let i = index">
-                <!--      <img style="width: 350px; height: 200px" src="{{item?.image}}" alt="" />-->
+            <ion-card style="text-transform: capitalize;" routerLink="/course-detail"
+                      class="withdrawCard" *ngFor="let iteration of [1,2,3,4]; let i = index">
                 <ion-card-header>
                     <ion-item>
                         <ion-card-title style="text-transform: capitalize;">
-                            <ion-icon color="primary" name="briefcase" size="small"></ion-icon>
-                            {{project?.name}}</ion-card-title>
+                            <ion-icon color="primary" name="bookmark" size="small"></ion-icon>
+                            Object Oriented Paradigm</ion-card-title>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-icon slot="start" color="primary" name="people" size="small"></ion-icon>
+                        <p>Students | {{47 + iteration}}</p>
                     </ion-item>
                     <ion-item>
                         <ion-icon color="primary" name="home" size="small"></ion-icon>
@@ -35,20 +34,16 @@
                         <ion-col size="6">
                             <ion-label style="text-transform: capitalize;">
                                 <ion-icon color="primary" name="calendar" size="small"></ion-icon>
-                                {{project?.startDate | date: 'dd-MM-yyyy'}}</ion-label>
+                                Nov 24, 2020</ion-label>
                         </ion-col>
                         <ion-col size="6">
                             <ion-label style="text-transform: capitalize;">
                                 <ion-icon color="primary" name="calendar" size="small"></ion-icon>
-                                {{project?.endDate | date: 'dd-MM-yyyy'}}</ion-label>
+                                Mar 31, 2021</ion-label>
                         </ion-col>
                     </ion-row>
-                    <ion-item>
-                        <ion-label style="text-transform: capitalize;">
-                            <ion-icon color="primary" name="people"></ion-icon>
-                            Dependents: {{project?.dependents}}</ion-label>
-                    </ion-item>
                 </ion-card-header>
+<<<<<<< HEAD
                 <!--                <ion-card-content>-->
                 <ion-item lines="none">
                     <ion-label>Required Donations</ion-label>
@@ -93,6 +88,8 @@
                 </ion-list>
 
                 <!--                </ion-card-content>-->
+=======
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
             </ion-card>
         </ion-col>
     </ion-row>

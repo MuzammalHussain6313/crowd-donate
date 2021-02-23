@@ -1,8 +1,12 @@
 import {Component} from '@angular/core';
+<<<<<<< HEAD
 import {LoadingController, NavController} from '@ionic/angular';
 import * as firebase from 'firebase';
 import {UserService} from '../services/user.service';
 import {ProjectService} from '../services/project.service';
+=======
+import {ActionSheetController, AlertController, NavController} from '@ionic/angular';
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
 
 @Component({
     selector: 'app-tab2',
@@ -11,22 +15,26 @@ import {ProjectService} from '../services/project.service';
 })
 export class Tab2Page {
 
-    donors = [];
-    loading: any;
-    close: boolean;
-    open: boolean;
+    student = true;
+    faculty = false;
 
+<<<<<<< HEAD
     constructor(private loadingCtrl: LoadingController,
                 private service: UserService,
                 private projectService: ProjectService,
+=======
+    constructor(private actionCtrl: ActionSheetController,
+                private alertCtrl: AlertController,
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
                 private navCtrl: NavController) {
-        this.loadData();
     }
 
-    expandCLick(item) {
-        item.show = !item.show;
+    segmentChanged($event: CustomEvent) {
+        this.student = !this.student;
+        this.faculty = !this.faculty;
     }
 
+<<<<<<< HEAD
     async loadData() {
         this.open = false;
         this.close = true;
@@ -43,15 +51,40 @@ export class Tab2Page {
                 }
                 if (this.loading) {
                     this.loading.dismiss();
+=======
+    async moreOptions() {
+        const alert = await this.actionCtrl.create({
+            header: 'More Options !!!',
+            cssClass: 'my-custom-class',
+            buttons: [
+                {
+                    text: 'View Details',
+                    icon: 'eye',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        // this.navCtrl.navigateForward(['/result']);
+                    }
+                },
+                {
+                    text: 'Delete',
+                    icon: 'trash',
+                    cssClass: 'danger',
+                    handler: () => {
+                        this.navCtrl.navigateForward(['/add-quiz']);
+                    }
+                },
+                {
+                    text: 'Edit',
+                    icon: 'pencil-sharp',
+                    cssClass: 'primary',
+                    handler: () => {
+                        // this.navCtrl.navigateForward(['/students']);
+                    }
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
                 }
-                console.log(this.donors);
-            });
-        }).catch(err => {
-            if (this.loading) {
-                this.loading.dismiss();
-            }
-            alert(err);
+            ]
         });
+<<<<<<< HEAD
     }
 
     openChat(email) {
@@ -75,5 +108,8 @@ export class Tab2Page {
         } else {
             this.navCtrl.navigateForward(['/donor-chat']);
         }
+=======
+        await alert.present();
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
     }
 }

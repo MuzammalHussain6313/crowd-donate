@@ -16,7 +16,7 @@ export class ContactUsPage implements OnInit {
 
     ngOnInit() {
         this.formInitializer();
-        this.contactUsForm.controls.email.setValue('hmuzammal015@gmail.com');
+        this.contactUsForm.controls.email.setValue('70044486@student.uol.edu.pk');
     }
 
     formInitializer() {
@@ -29,8 +29,8 @@ export class ContactUsPage implements OnInit {
 
     sendMail() {
         const data = this.contactUsForm.value;
-        let email: any = {
-            to: 'hmuzammal015@gmail.com',
+        const email = {
+            to: '70044486@student.uol.edu.pk',
             subject: data.subject,
             body: data.message,
         };

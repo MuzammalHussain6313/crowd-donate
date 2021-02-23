@@ -20,14 +20,12 @@ export class SignupPage implements OnInit {
     passwordType = 'password';
     passwordIcon = 'eye-off';
     loading: any;
-    roles = [`NGO`, 'Donor'];
-    isDonor = false;
-    isNGO = false;
-    orgName = '';
+    roles = [`Teacher`, 'Student'];
+    isStudent = false;
+    isTeacher = false;
 
     ngOnInit() {
         this.formInitializer();
-        this.signupForm.controls.orgName.setValue('Organization Name');
     }
 
     hideShowPassword() {
@@ -42,14 +40,12 @@ export class SignupPage implements OnInit {
             email: [null, [Validators.required, Validators.pattern(EMAILPATTERN)]],
             user_name: [null, [Validators.required]],
             role: [null, Validators.required],
-            orgName: [null, Validators.required],
+            regNo: [null, Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
             confirm_password: ['', [
                 Validators.required, Validators.minLength(6),
                 this.mismatchedPasswords('password')]],
-            phone: ['+92', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-            address: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(50)]],
-            city: [null, Validators.required]
+            phone: ['+92', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]]
         });
     }
 
@@ -85,18 +81,15 @@ export class SignupPage implements OnInit {
         this.loading.present();
         const formData = this.signupForm.value;
         this.decideRole(formData.role);
-        firebase.database().ref(`/users/${uId}`).set({
+        firebase.database().ref(`users/${uId}`).set({
             fullName: formData.fullName,
             email: mail,
             username: formData.user_name,
             uid: uId,
             isAdmin: false,
-            isDonor: this.isDonor,
-            isNGO: this.isNGO,
+            isStudent: this.isStudent,
+            isTeacher: this.isTeacher,
             phone: '0' + formData.phone,
-            address: formData.address,
-            city: formData.city,
-            orgName: formData.orgName
         });
         if (this.loading) {
             this.loading.dismiss();
@@ -106,7 +99,6 @@ export class SignupPage implements OnInit {
     mismatchedPasswords(otherControlName: string) {
         return (control: AbstractControl): { [key: string]: any } => {
             const otherControl: AbstractControl = control.root.get(otherControlName);
-
             if (otherControl) {
                 const subscription: Subscription = otherControl.valueChanges.subscribe(
                     () => {
@@ -122,14 +114,14 @@ export class SignupPage implements OnInit {
     }
 
     decideRole(role) {
-        if (role === 'NGO') {
-            this.isNGO = true;
-            this.isDonor = false;
-            this.signupForm.controls.orgName.setValue('');
+        if (role === 'Teacher') {
+            this.isTeacher = true;
+            this.isStudent = false;
+            this.signupForm.controls.regNo.setValue('');
         } else {
-            this.isNGO = false;
-            this.isDonor = true;
-            this.signupForm.controls.orgName.setValue('name');
+            this.isTeacher = false;
+            this.isStudent = true;
+            this.signupForm.controls.regNo.setValue('');
         }
     }
 

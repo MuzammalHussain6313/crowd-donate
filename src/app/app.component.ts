@@ -1,18 +1,19 @@
-import {Component} from '@angular/core';
-import {NavController, Platform} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {User} from './models/user';
+import { Component } from '@angular/core';
+
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {UserService} from './services/user.service';
 import {ProjectService} from './services/project.service';
 import {FCM} from 'cordova-plugin-fcm-with-dependecy-updated/ionic';
 import { AppLauncher, AppLauncherOptions } from '@ionic-native/app-launcher/ngx';
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss']
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+<<<<<<< HEAD
     appState: any;
     user: User;
 
@@ -83,18 +84,21 @@ export class AppComponent {
         //     firebase.database().ref(`deviceTokens/`).set(token);
         // });
     }
+=======
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private service: UserService
+  ) {
+    this.initializeApp();
+  }
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
 
-    checkAppState() {
-        // tslint:disable-next-line:no-debugger
-        // debugger;
-        if (this.user) {
-            if (this.user.isAdmin) {
-                this.navCtrl.navigateRoot(['tabs/tab5']);
-            } else {
-                this.navCtrl.navigateRoot(['/tabs/tab1']);
-            }
-        } else {
-            this.navCtrl.navigateRoot(['/']);
-        }
-    }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
+  }
 }

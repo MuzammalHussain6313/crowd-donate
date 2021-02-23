@@ -23,10 +23,11 @@ const routes: Routes = [
     loadChildren: () => import('./authentication/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
   },
   {
-    path: 'add-donation',
-    loadChildren: () => import('./donor/add-donation/add-donation.module').then(m => m.AddDonationPageModule)
+    path: 'course-detail',
+    loadChildren: () => import('./shared/course-detail/course-detail.module').then( m => m.CourseDetailPageModule)
   },
   {
+<<<<<<< HEAD
     path: 'admin-chat',
     loadChildren: () => import('./admin/admin-chat/admin-chat.module').then( m => m.AdminChatPageModule)
   },
@@ -45,18 +46,27 @@ const routes: Routes = [
   {
     path: 'tab5',
     loadChildren: () => import('./tab5/tab5.module').then( m => m.Tab5PageModule)
+=======
+    path: 'old-quiz',
+    loadChildren: () => import('./old-quiz/old-quiz.module').then( m => m.OldQuizPageModule)
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
   },
   {
-    path: 'tab6',
-    loadChildren: () => import('./tab6/tab6.module').then( m => m.Tab6PageModule)
+    path: 'add-quiz',
+    loadChildren: () => import('./add-quiz/add-quiz.module').then( m => m.AddQuizPageModule)
   },
   {
+<<<<<<< HEAD
     path: 'donor-help-desk',
     loadChildren: () => import('./donor/donor-chat/donor-chat.module').then( m => m.DonorChatPageModule)
   },
   {
     path: 'admin-channels',
     loadChildren: () => import('./admin/channels/channels.module').then( m => m.ChannelsPageModule)
+=======
+    path: 'attempt-quiz',
+    loadChildren: () => import('./attempt-quiz/attempt-quiz.module').then( m => m.AttemptQuizPageModule)
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
   },
   {
     path: 'edit-profile',
@@ -79,10 +89,11 @@ const routes: Routes = [
     loadChildren: () => import('./shared/terms/terms.module').then( m => m.TermsPageModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./shared/profile/profile.module').then( m => m.ProfilePageModule)
+    path: 'result',
+    loadChildren: () => import('./result/result.module').then( m => m.ResultPageModule)
   },
   {
+<<<<<<< HEAD
     path: 'ngo-channels',
     loadChildren: () => import('./NGO/channels/channels.module').then( m => m.ChannelsPageModule)
   },
@@ -93,10 +104,18 @@ const routes: Routes = [
   {
     path: 'donor-channels',
     loadChildren: () => import('./donor/channels/channels.module').then( m => m.ChannelsPageModule)
+=======
+    path: 'students',
+    loadChildren: () => import('./students/students.module').then( m => m.StudentsPageModule)
   },
   {
-    path: 'ngo-chat',
-    loadChildren: () => import('./donor/ngo-chat/ngo-chat.module').then( m => m.NgoChatPageModule)
+    path: 'admin-channels',
+    loadChildren: () => import('./admin/channels/channels.module').then( m => m.ChannelsPageModule)
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
+  },
+  {
+    path: 'admin-chat',
+    loadChildren: () => import('./admin/admin-chat/admin-chat.module').then( m => m.AdminChatPageModule)
   }
 ];
 @NgModule({

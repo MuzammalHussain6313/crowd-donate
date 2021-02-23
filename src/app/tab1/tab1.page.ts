@@ -1,19 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import * as firebase from 'firebase';
-import {Donations, Project} from '../models/donations';
-import {AlertController, LoadingController, NavController} from '@ionic/angular';
-import {element} from 'protractor';
-import {ProjectService} from '../services/project.service';
-import {User} from '../models/user';
-import {UserService} from '../services/user.service';
+import {Component} from '@angular/core';
+import {AlertController} from '@ionic/angular';
 
 @Component({
     selector: 'app-tab1',
     templateUrl: 'tab1.page.html',
     styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page {
 
+<<<<<<< HEAD
     projects: Project[] = [];
     loading: any;
     user: User;
@@ -164,25 +159,36 @@ export class Tab1Page implements OnInit {
     async editQuantity(i: number, j: number) {
         const quantity = this.projects[i].donationsRequired[j].quantity;
         const alert = await this.alertCtrl.create({
+=======
+    courseName = 'Data Mining';
+
+    constructor(private alertController: AlertController) {
+    }
+
+    async joinClass() {
+        const alert = await this.alertController.create({
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
             cssClass: 'my-custom-class',
-            message: 'Please Update Quantity !',
-            inputs: [{
-                name: 'quantity',
-                type: 'number',
-                value: quantity ? quantity + '' : '',
-                placeholder: 'Enter Quantity',
-            }],
+            header: 'Join ' + this.courseName + ' !!!',
+            inputs: [
+                {
+                    name: 'join',
+                    type: 'text',
+                    placeholder: 'Enter Class Code'
+                }
+            ],
             buttons: [
                 {
                     text: 'Cancel',
+                    role: 'cancel',
                     cssClass: 'secondary',
                     handler: () => {
+                        console.log('Confirm Cancel');
                     }
                 }, {
-                    text: 'OK',
-                    handler: (data) => {
-                        console.log('data :', data.quantity);
-                        this.updateQuantityInFirebase(data.quantity, i, j);
+                    text: 'Ok',
+                    handler: () => {
+                        console.log('Confirm Ok');
                     }
                 }
             ]
@@ -190,6 +196,7 @@ export class Tab1Page implements OnInit {
         await alert.present();
     }
 
+<<<<<<< HEAD
     async updateQuantityInFirebase(quantity, i, j) {
         this.loading = await this.loadingCtrl.create({
             message: 'please wait...'
@@ -235,4 +242,6 @@ export class Tab1Page implements OnInit {
             this.navCtrl.navigateForward(['/ngo-chat']);
         }
     }
+=======
+>>>>>>> 8869fc7e5629414af878c92babc7863e66e49bb0
 }

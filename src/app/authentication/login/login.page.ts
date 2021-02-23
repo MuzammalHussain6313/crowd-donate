@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
             message: 'please wait...'
         });
         this.loading.present();
-        firebase.database().ref(`/users/${id}`).on('value', snapshot => {
+        firebase.database().ref(`users/${id}`).on('value', snapshot => {
             this.service.setUser(snapshot.val());
             console.log(snapshot.val());
             if (this.loading) {
@@ -77,7 +77,7 @@ export class LoginPage implements OnInit {
             const isAdmin = snapshot.val().isAdmin;
             console.log('is Admin: ', isAdmin);
             if (isAdmin) {
-                this.navCtrl.navigateRoot(['tabs/tab5']);
+                this.navCtrl.navigateRoot(['tabs/tab2']);
             } else {
                 this.navCtrl.navigateRoot(['/tabs']);
             }
