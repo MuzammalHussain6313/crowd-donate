@@ -1,39 +1,51 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Project} from '../models/donations';
+import * as firebase from 'firebase';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ProjectService {
-  projects: Project[] = [];
-  length: any;
-  uid: any;
+    projects: Project[] = [];
+    length: any;
+    uid: any;
+    channels: any = [];
 
-  constructor() {
-  }
+    constructor() {
+      this.locadChannels();
+    }
 
-  setProjects(projects) {
-    this.projects = projects;
-    localStorage.setItem('projects', JSON.stringify(this.projects));
-  }
+    locadChannels() {
+        this.channels = [];
+        firebase.database().ref('/channels').on('value', snapshot => {
+            snapshot.forEach(node => {
+              this.channels.push(node.val());
+            });
+        });
+    }
 
-  getProjects() {
-    return this.projects;
-  }
+    setProjects(projects) {
+        this.projects = projects;
+        localStorage.setItem('projects', JSON.stringify(this.projects));
+    }
 
-  getLength() {
-    return this.length;
-  }
+    getProjects() {
+        return this.projects;
+    }
 
-  getUid() {
-    return this.uid;
-  }
+    getLength() {
+        return this.length;
+    }
 
-  setUid(uid) {
-    this.uid = uid;
-  }
+    getUid() {
+        return this.uid;
+    }
 
-  setLength(length) {
-    this.length = length;
-  }
+    setUid(uid) {
+        this.uid = uid;
+    }
+
+    setLength(length) {
+        this.length = length;
+    }
 }

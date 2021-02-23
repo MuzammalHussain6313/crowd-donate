@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {User} from '../models/user';
+import * as firebase from 'firebase';
 
 @Injectable({
     providedIn: 'root'
@@ -7,6 +8,7 @@ import {User} from '../models/user';
 export class UserService {
     constructor() {
         this.user = new User();
+        this.loadAllUser();
     }
 
     cities: any = ['Ahmadpur East',
@@ -131,6 +133,7 @@ export class UserService {
     ];
     selectedEmail: any;
     user: User;
+    allUsers: any = [];
 
     setUser(user: any) {
         this.user = user;
@@ -140,5 +143,15 @@ export class UserService {
     getUser() {
         this.user = JSON.parse(localStorage.getItem('user'));
         return this.user;
+    }
+
+    loadAllUser() {
+        this.allUsers = [];
+        firebase.database().ref('/users').once('value', snapshot => {
+            const data = snapshot.val();
+            snapshot.forEach(node => {
+                this.allUsers.push(node.val());
+            });
+        });
     }
 }

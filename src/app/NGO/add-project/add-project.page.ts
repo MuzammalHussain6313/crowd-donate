@@ -58,37 +58,39 @@ export class AddProjectPage implements OnInit {
     }
 
     async addDonation() {
-      if (this.donations.length === 0) {
-        alert('Please enter At least One Required Item for donation.');
-      } else {
-        this.loading = await this.loadingCtrl.create({
-          message: 'please wait...'
-        });
-        this.loading.present();
-        const data = this.projectForm.value;
-        const id = Date.now().toString();
-        // const id = Date().toString();
-        console.log('data', data);
-        firebase.database().ref(`/projects/${id}`).set({
-          uid: id,
-          name: data.name,
-          dependents: data.dependents,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          donationsRequired: this.donations,
-          show: false,
-        }).then(res => {
-          if (this.loading) {
-            this.loading.dismiss();
-          }
-          this.navCtrl.back();
-        }).catch(err => {
-          if (this.loading) {
-            this.loading.dismiss();
-          }
-          alert(err);
-        });
-      }
+        if (this.donations.length === 0) {
+            alert('Please enter At least One Required Item for donation.');
+        } else {
+            this.loading = await this.loadingCtrl.create({
+                message: 'please wait...'
+            });
+            this.loading.present();
+            const user = JSON.parse(localStorage.getItem('user'));
+            const data = this.projectForm.value;
+            const id = Date.now().toString();
+            // const id = Date().toString();
+            console.log('data', data);
+            firebase.database().ref(`/projects/${id}`).set({
+                uid: id,
+                name: data.name,
+                dependents: data.dependents,
+                startDate: data.startDate,
+                endDate: data.endDate,
+                donationsRequired: this.donations,
+                show: false,
+                userId: user.uid
+            }).then(res => {
+                if (this.loading) {
+                    this.loading.dismiss();
+                }
+                this.navCtrl.back();
+            }).catch(err => {
+                if (this.loading) {
+                    this.loading.dismiss();
+                }
+                alert(err);
+            });
+        }
     }
 
     addDonationToList() {

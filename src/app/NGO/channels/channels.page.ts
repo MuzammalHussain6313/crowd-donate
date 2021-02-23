@@ -1,15 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {IonContent, LoadingController, NavController, ToastController} from '@ionic/angular';
+import {UserService} from '../../services/user.service';
+import * as firebase from 'firebase';
 
 @Component({
-  selector: 'app-channels',
-  templateUrl: './channels.page.html',
-  styleUrls: ['./channels.page.scss'],
+    selector: 'app-channels',
+    templateUrl: './channels.page.html',
+    styleUrls: ['./channels.page.scss'],
 })
 export class ChannelsPage implements OnInit {
 
-  constructor() { }
+    channels = [];
+    user: any;
+    loading: any;
+    @ViewChild(IonContent) content: IonContent;
 
-  ngOnInit() {
-  }
+    constructor(private readonly loadingCtrl: LoadingController,
+                private service: UserService,
+                private navCtrl: NavController) {
+    }
 
+    ngOnInit() {
+        this.user = this.service.getUser();
+        this.loadChannels();
+    }
+
+    loadChannels() {
+        const filter = this.user?.email.split('.').join('');
+        firebase.database().ref(`/channels`).once('value', snapshot => {
+            this.channels = [];
+            snapshot.forEach((node) => {
+                const data = node.val();
+                if (data?.sender === this.user?.email) {
+                    this.channels.push(node.val());
+                }
+            });
+        }, err => {
+            alert(err);
+        });
+    }
+
+    goToChat(email) {
+        console.log('saving', email);
+        localStorage.setItem('donorEmail', email);
+        this.navCtrl.navigateForward(['/donor-chat']);
+    }
 }

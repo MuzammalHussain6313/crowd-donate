@@ -15,6 +15,8 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import * as firebase from 'firebase';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+// import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+import { AppLauncher, AppLauncherOptions } from '@ionic-native/app-launcher/ngx';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyByWmLrevFgeDG13L52z6xWoT2IE0opZAE',
@@ -46,7 +48,9 @@ firebase.initializeApp(firebaseConfig);
         GooglePlus,
         FirebaseX,
         LocalNotifications,
+        // FCM,
         EmailComposer,
+        AppLauncher,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

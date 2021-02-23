@@ -6,6 +6,7 @@ export class Project {
     endDate: any;
     donationsRequired: Donations[];
     show: boolean;
+    user: any;
 }
 export class Donations {
     itemName: string;

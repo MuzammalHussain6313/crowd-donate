@@ -11,4 +11,5 @@ export class User {
     isDonor: boolean;
     address: string;
     city: string;
+    orgName: any;
 }

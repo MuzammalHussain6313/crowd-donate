@@ -39,7 +39,7 @@ const routes: Routes = [
     loadChildren: () => import('./NGO/add-project/add-project.module').then( m => m.AddProjectPageModule)
   },
   {
-    path: 'chat',
+    path: 'ngo-help-desk',
     loadChildren: () => import('./NGO/chat/chat.module').then( m => m.ChatPageModule)
   },
   {
@@ -51,11 +51,11 @@ const routes: Routes = [
     loadChildren: () => import('./tab6/tab6.module').then( m => m.Tab6PageModule)
   },
   {
-    path: 'donor-chat',
+    path: 'donor-help-desk',
     loadChildren: () => import('./donor/donor-chat/donor-chat.module').then( m => m.DonorChatPageModule)
   },
   {
-    path: 'channels',
+    path: 'admin-channels',
     loadChildren: () => import('./admin/channels/channels.module').then( m => m.ChannelsPageModule)
   },
   {
@@ -83,7 +83,7 @@ const routes: Routes = [
     loadChildren: () => import('./shared/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'channels',
+    path: 'ngo-channels',
     loadChildren: () => import('./NGO/channels/channels.module').then( m => m.ChannelsPageModule)
   },
   {
@@ -91,7 +91,7 @@ const routes: Routes = [
     loadChildren: () => import('./NGO/donor-chat/donor-chat.module').then( m => m.DonorChatPageModule)
   },
   {
-    path: 'channels',
+    path: 'donor-channels',
     loadChildren: () => import('./donor/channels/channels.module').then( m => m.ChannelsPageModule)
   },
   {

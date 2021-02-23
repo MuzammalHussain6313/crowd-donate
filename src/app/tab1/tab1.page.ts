@@ -17,14 +17,17 @@ export class Tab1Page implements OnInit {
     projects: Project[] = [];
     loading: any;
     user: User;
+    channels: any = [];
 
     constructor(private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController,
                 private service: ProjectService,
                 private userService: UserService,
+                private projectService: ProjectService,
                 private navCtrl: NavController) {
         this.loadData();
         this.user = userService.getUser();
+        this.channels = projectService.channels;
         // this.insertDummyData();
     }
 
@@ -56,7 +59,9 @@ export class Tab1Page implements OnInit {
             .on('value', snapshot => {
                 this.projects = [];
                 snapshot.forEach((node) => {
-                    this.projects.push(node.val());
+                    const project = node.val();
+                    project.user = this.loadUser(project.userId);
+                    this.projects.push(project);
                     console.log(this.projects);
                 });
                 this.service.setProjects(this.projects);
@@ -75,6 +80,15 @@ export class Tab1Page implements OnInit {
                 console.log('error: ', err);
                 this.projects = this.service.getProjects();
             });
+    }
+
+    loadUser(id: any) {
+        debugger;
+        const us = this.userService.allUsers;
+        const users = this.userService.allUsers.filter(user => {
+            return user.uid === id;
+        });
+        return users[0];
     }
 
     expandCLick(item: Project) {
@@ -202,7 +216,23 @@ export class Tab1Page implements OnInit {
         this.navCtrl.navigateForward(['/add-donation']);
     }
 
-    openChat() {
-        this.navCtrl.navigateForward(['/chat']);
+    openChat(user: any) {
+        localStorage.setItem('ngoEmail', user?.email);
+        const channel: any = {};
+        channel.sender = user?.email;
+        channel.reciever = this.user.email;
+        let found = false;
+        for (let i = 0; i < this.channels.length; i++) {
+            if (this.channels[i].sender === user?.email && this.channels[i].receiver === this.user.email) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            const key = firebase.database().ref('/channels').key;
+            firebase.database().ref('/channels').child(key).set(channel);
+        } else {
+            this.navCtrl.navigateForward(['/ngo-chat']);
+        }
     }
 }

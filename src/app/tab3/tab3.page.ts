@@ -4,6 +4,7 @@ import {UserService} from '../services/user.service';
 import {ActionSheetController, AlertController, LoadingController, NavController} from '@ionic/angular';
 import {Camera, CameraOptions} from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-tab3',
@@ -20,6 +21,7 @@ export class Tab3Page {
                 private loadingCtrl: LoadingController,
                 private alertCtrl: AlertController,
                 private actionCtrl: ActionSheetController,
+                private http: HttpClient,
                 private navCtrl: NavController) {
         this.user = new User();
         this.user = service.getUser();
@@ -329,11 +331,11 @@ export class Tab3Page {
                     handler: () => {
                         console.log('Archive clicked');
                         if (this.user.isAdmin) {
-                            this.navCtrl.navigateForward(['/channels']);
+                            this.navCtrl.navigateForward(['/admin-channels']);
                         } else if (this.user.isDonor) {
-                            this.navCtrl.navigateForward(['/donor-chat']);
+                            this.navCtrl.navigateForward(['/donor-help-desk']);
                         } else {
-                            this.navCtrl.navigateForward(['/chat']);
+                            this.navCtrl.navigateForward(['/ngo-help-desk']);
                         }
                     }
                 },
@@ -372,5 +374,36 @@ export class Tab3Page {
 
     goToTerms() {
         this.navCtrl.navigateForward(['/terms']);
+    }
+
+    async senNotification() {
+        const data = {};
+        await this.http.post('https://send-notification-api.herokuapp.com/send-notification', data)
+            .subscribe(res => {
+                this.showAlert();
+            });
+    }
+
+    async showAlert() {
+        const alert = await this.alertCtrl.create({
+            header: 'Success!',
+            message: '<strong>Notification successfully send</strong>!!!',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Okay',
+                    handler: () => {
+                        console.log('Confirm Okay');
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 }
